@@ -1,0 +1,28 @@
+# Contributor: Alexandre Janon <alex14fr@gmail.com>
+# Maintainer: Alexandre Janon <alex14fr@gmail.com>
+pkgname=slic3r-cli
+_gitcommit="92abbc42dfdd5385c1f9c3a450e2f3da835f8b8d"
+pkgver=1.3.0_git20200820
+pkgrel=0
+pkgdesc="G-code generator and STL/AMF/3MF/OBJ/POV converter - command line interface"
+url="http://www.slic3r.org"
+arch="all"
+license="AGPL-3.0"
+makedepends="cmake boost-dev boost-static"
+source="${pkgname}-${pkgver}.tar.gz::https://github.com/slic3r/Slic3r/archive/${_gitcommit}.tar.gz"
+builddir="$srcdir/"
+options="!check"
+
+build() {
+	mkdir build
+	cd build
+	cmake ../Slic3r-"$_gitcommit"/src
+	make
+}
+
+package() {
+	cd build
+	install -Dm755 slic3r "$pkgdir"/usr/bin/slic3r
+}
+
+sha512sums="fd7198f7c4a60911b2009f617d37485bf73964a626a53d02bd13baae963d28e74dc2f8314888e7c0fcacb389e0b481f3357c6ea595ac8f92d99f7a228c5cc2b7  slic3r-cli-1.3.0_git20200820.tar.gz"
